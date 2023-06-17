@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"*.ber": "restructuredtext",
+		"philosophers.h": "c"
+	}
+}

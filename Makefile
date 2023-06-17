@@ -1,7 +1,7 @@
 .SILENT:
 
 CFLAGS    = -Wall -Wextra -Werror
-NAME      = philosophers
+NAME      = philo
 SRCS = src/main.c \
 		src/init_table.c \
 		src/check_utils.c \

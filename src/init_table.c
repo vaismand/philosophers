@@ -1,4 +1,4 @@
-#include "philosophers.h"
+#include "philo.h"
 
 void	ft_init_vars(int argc, char **argv, t_table *table)
 {
@@ -10,36 +10,28 @@ void	ft_init_vars(int argc, char **argv, t_table *table)
 		table->must_eat_count = ft_atoi(argv[5]);
 	else
 		table->must_eat_count = -1;
-	table->forks = NULL;
-	table->philos = NULL;
-	table->start = 0;
+	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->philo_count);
+	if (!table->philos)
+		ft_error_msg("Error: malloc failed\n", table);
+	table->start_time = ft_get_time();
 	table->dead = 0;
+	pthread_mutex_init(&table->write, NULL);
 }
 
 void	ft_init_table(t_table *table)
 {
 	int	i;
 
-	table->forks = malloc(sizeof(int) * table->philo_count);
-	if (!table->forks)
-		ft_error_msg("Error: malloc failed\n", table);
 	i = 0;
-	while (i < table->philo_count)
-		table->forks[i++] = FORK;
-	table->philos = malloc(sizeof(t_philo) * table->philo_count);
-	if (!table->philos)
-		ft_error_msg("Error: malloc failed\n", table);
-	i = 0;
-	while (i < table->philo_count)
+	while (i++ < table->philo_count)
 	{
 		table->philos[i].id = i + 1;
-		table->philos[i].state = THINK;
 		table->philos[i].eat_count = 0;
-		table->philos[i].last_eat = 0;
-		table->philos[i].left_fork = i;
-		table->philos[i].right_fork = (i + 1) % table->philo_count;
+		table->philos[i].state = THINK;
+		table->philos[i].last_eat = ft_get_time();
 		table->philos[i].table = table;
-		i++;
 	}
+	pthread_mutex_init(&table->stop, NULL);
+	pthread_mutex_init(&table->eat, NULL);
+	pthread_mutex_lock(&table->eat);
 }
-

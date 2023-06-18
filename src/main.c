@@ -1,4 +1,4 @@
-#include "philosophers.h"
+#include "philo.h"
 
 
 
@@ -14,6 +14,5 @@ int	main(int argc, char **argv)
 		ft_error_msg("Error: malloc failed\n", NULL);
 	ft_init_vars(argc, argv, table);
 	ft_init_table(table);
-	ft_start_threads(table);
 	return (0);
 }

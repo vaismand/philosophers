@@ -23,15 +23,33 @@ void	ft_init_table(t_table *table)
 	int	i;
 
 	i = 0;
-	while (i++ < table->philo_count)
+	while (i < table->philo_count)
 	{
 		table->philos[i].id = i + 1;
 		table->philos[i].eat_count = 0;
 		table->philos[i].state = THINK;
 		table->philos[i].last_eat = ft_get_time();
 		table->philos[i].table = table;
+		pthread_mutex_init(&table->philos[i].left, NULL);
+		if (i == 0)
+			table->philos[i].right = &table->philos[table->philo_count - 1].left;
+		else
+			table->philos[i].right = &table->philos[i - 1].left;
+		i++;
 	}
 	pthread_mutex_init(&table->stop, NULL);
 	pthread_mutex_init(&table->eat, NULL);
-	pthread_mutex_lock(&table->eat);
+}
+
+void	ft_start_threads(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->philo_count)
+	{
+		pthread_create(&table->philos[i].thread, NULL, ft_philo_act,
+			&table->philos[i]);
+		i++;
+	}
 }

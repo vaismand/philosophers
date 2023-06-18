@@ -43,11 +43,16 @@ typedef struct s_table
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 int		ft_strlen(char *s);
+int		ft_print_status(t_philo *philo, int status);
+void	ft_usleep(long long time);
 void	ft_exit(t_table *table);
 void	ft_error_msg(char *msg, t_table *table);
 void	ft_init_vars(int argc, char **argv, t_table *table);
 void	ft_init_table(t_table *table);
 void	ft_putstr_fd(char *s, int fd);
+void	ft_start_threads(t_table *table);
+void	*ft_philo_act(void *arg);
+void	ft_check_death(t_philo *philo);
 long long	ft_get_time(void);
 
 #endif

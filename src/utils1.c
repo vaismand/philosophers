@@ -39,11 +39,11 @@ long long	ft_get_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void	ft_usleep(long long time)
+void	ft_usleep(long long time, t_table *table)
 {
 	long long	start;
 
 	start = ft_get_time();
 	while (ft_get_time() - start < time)
-		usleep(100);
+		usleep(table->philo_count * 50);
 }

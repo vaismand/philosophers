@@ -44,7 +44,7 @@ int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 int		ft_strlen(char *s);
 int		ft_print_status(t_philo *philo, int status);
-void	ft_usleep(long long time);
+void	ft_usleep(long long time, t_table *table);
 void	ft_exit(t_table *table);
 void	ft_error_msg(char *msg, t_table *table);
 void	ft_init_vars(int argc, char **argv, t_table *table);

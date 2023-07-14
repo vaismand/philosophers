@@ -1,7 +1,5 @@
 #include "philo.h"
 
-
-
 int	main(int argc, char **argv)
 {
 	if (argc == 5 || argc == 6)
@@ -14,8 +12,6 @@ int	main(int argc, char **argv)
 		ft_init_vars(argc, argv, table);
 		ft_init_table(table);
 		ft_start_threads(table);
-		ft_check_death(table->philos);
-		ft_exit(table);
 	}
 	else
 		ft_error_msg("Error: wrong number of arguments\n", NULL);

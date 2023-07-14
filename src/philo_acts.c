@@ -78,6 +78,7 @@ int	ft_print_status(t_philo *philo, int status)
 		printf("%lld %d died\n",
 			ft_get_time() - philo->table->start_time, philo->id);
 		pthread_mutex_unlock(&philo->table->stop);
+		return (1);
 	}
 	pthread_mutex_unlock(&philo->table->write);
 	return (0);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_acts.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/15 13:45:17 by dvaisman          #+#    #+#             */
+/*   Updated: 2023/07/15 17:30:00 by dvaisman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_philo_eat(t_philo *philo)
@@ -18,24 +30,21 @@ int	ft_philo_eat(t_philo *philo)
 	return (0);
 }
 
-void	*ft_philo_act(void *arg)
+void *ft_philo_act(void *arg)
 {
-	t_philo	*philo;
+	t_philo *philo;
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->table->time_to_eat, philo->table);
-	while (1)
+	while (philo->table->must_eat_count != philo->eat_count && !philo->table->stop_cond)
 	{
 		ft_philo_eat(philo);
-		ft_print_status(philo, SLEEP);
 		philo->state = SLEEP;
+		ft_print_status(philo, SLEEP);
 		ft_usleep(philo->table->time_to_sleep, philo->table);
-		ft_print_status(philo, THINK);
 		philo->state = THINK;
-		if (philo->table->must_eat_count != -1
-			&& philo->eat_count == philo->table->must_eat_count)
-			break ;
+		ft_print_status(philo, THINK);
 	}
 	return (NULL);
 }
@@ -44,14 +53,18 @@ void	ft_check_death(t_philo *philo)
 {
 	while (1)
 	{
-		if (philo->state != EAT
-			&& ft_get_time() - philo->last_eat > philo->table->time_to_die)
+		if (ft_get_time() - philo->last_eat > philo->table->time_to_die)
 		{
+			pthread_mutex_lock(&philo->table->stop);
 			philo->state = DEAD;
 			ft_print_status(philo, DEAD);
-			pthread_mutex_unlock(philo->right);
-			pthread_mutex_unlock(&philo->left);
-			pthread_mutex_unlock(&philo->table->write);
+			philo->table->stop_cond = 1;
+			break ;
+		}
+		if (philo->table->must_eat_count != -1 && philo->eat_count == philo->table->must_eat_count)
+		{
+			pthread_mutex_lock(&philo->table->eat);
+			philo->table->stop_cond = 1;
 			break ;
 		}
 	}

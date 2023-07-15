@@ -32,7 +32,7 @@ typedef struct s_table
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat_count;
-	int				dead;
+	int				stop_cond;
 	t_philo			*philos;
 	long long		start_time;
 	pthread_mutex_t	write;
@@ -45,7 +45,7 @@ int		ft_isdigit(int c);
 int		ft_strlen(char *s);
 int		ft_print_status(t_philo *philo, int status);
 void	ft_usleep(long long time, t_table *table);
-void	ft_exit(t_table *table);
+void	ft_exit_threads(t_table *table);
 void	ft_error_msg(char *msg, t_table *table);
 void	ft_init_vars(int argc, char **argv, t_table *table);
 void	ft_init_table(t_table *table);

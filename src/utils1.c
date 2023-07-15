@@ -4,14 +4,8 @@ void	ft_error_msg(char *msg, t_table *table)
 {
 	ft_putstr_fd(msg, 2);
 	if (table)
-		ft_exit(table);
+		ft_exit_threads(table);
 	exit(1);
-}
-
-void	ft_exit(t_table *table)
-{
-	pthread_mutex_destroy(&table->write);
-	free(table->philos);
 }
 
 int	ft_check_args(int argc, char **argv)

@@ -14,7 +14,7 @@ void	ft_init_vars(int argc, char **argv, t_table *table)
 	if (!table->philos)
 		ft_error_msg("Error: malloc failed\n", table);
 	table->start_time = ft_get_time();
-	table->dead = 0;
+	table->stop_cond = 0;
 	if (pthread_mutex_init(&table->write, NULL) != 0)
 		ft_error_msg("Error: mutex init failed\n", table);
 	
@@ -57,9 +57,31 @@ void	ft_start_threads(t_table *table)
 	{
 		pthread_create(&table->philos[i].thread, NULL, ft_philo_act,
 			&table->philos[i]);
-		pthread_detach(table->philos[i].thread);
 		i++;
 	}
 	ft_check_death(table->philos);
-	ft_exit(table);
+	ft_exit_threads(table);
+}
+
+void	ft_exit_threads(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->philo_count)
+	{
+		pthread_detach(table->philos[i].thread);
+		i++;
+	}
+	i = 0;
+	while (i < table->philo_count)
+	{
+		pthread_mutex_destroy(&table->philos[i].left);
+		i++;
+	}
+	pthread_mutex_destroy(&table->write);
+	pthread_mutex_destroy(&table->stop);
+	pthread_mutex_destroy(&table->eat);
+	free(table->philos);
+	free(table);
 }

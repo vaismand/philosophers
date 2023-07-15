@@ -6,18 +6,15 @@ int	ft_philo_eat(t_philo *philo)
 	ft_print_status(philo, FORK);
 	pthread_mutex_lock(philo->right);
 	ft_print_status(philo, FORK);
+	pthread_mutex_lock(&philo->table->eat);
 	philo->state = EAT;
 	ft_print_status(philo, EAT);
 	philo->last_eat = ft_get_time();
+	pthread_mutex_unlock(&philo->table->eat);
+	philo->eat_count++;
 	ft_usleep(philo->table->time_to_eat, philo->table);
 	pthread_mutex_unlock(&philo->left);
 	pthread_mutex_unlock(philo->right);
-	philo->eat_count++;
-	if (philo->eat_count == philo->table->must_eat_count)
-	{
-		pthread_mutex_unlock(&philo->table->eat);
-		return (1);
-	}
 	return (0);
 }
 
@@ -26,15 +23,19 @@ void	*ft_philo_act(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+		ft_usleep(philo->table->time_to_eat, philo->table);
 	while (1)
 	{
-		if (ft_philo_eat(philo))
-			break ;
+		ft_philo_eat(philo);
 		ft_print_status(philo, SLEEP);
 		philo->state = SLEEP;
 		ft_usleep(philo->table->time_to_sleep, philo->table);
 		ft_print_status(philo, THINK);
 		philo->state = THINK;
+		if (philo->table->must_eat_count != -1
+			&& philo->eat_count == philo->table->must_eat_count)
+			break ;
 	}
 	return (NULL);
 }

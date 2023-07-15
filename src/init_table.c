@@ -32,8 +32,10 @@ void	ft_init_table(t_table *table)
 		table->philos[i].state = THINK;
 		table->philos[i].last_eat = ft_get_time();
 		table->philos[i].table = table;
-		if (pthread_mutex_init(&table->philos[i + 1].left, NULL) != 0)
-			ft_error_msg("Error: mutex init failed\n", table);
+		if (i == table->philo_count - 1)
+			pthread_mutex_init(&table->philos[0].left, NULL);
+		else
+			pthread_mutex_init(&table->philos[i + 1].left, NULL);
 		if (i == 0)
 			table->philos[i].right = &table->philos[table->philo_count - 1].left;
 		else
@@ -55,6 +57,7 @@ void	ft_start_threads(t_table *table)
 	{
 		pthread_create(&table->philos[i].thread, NULL, ft_philo_act,
 			&table->philos[i]);
+		pthread_detach(table->philos[i].thread);
 		i++;
 	}
 	ft_check_death(table->philos);

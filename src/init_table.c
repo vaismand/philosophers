@@ -6,7 +6,7 @@
 /*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 12:39:26 by dvaisman          #+#    #+#             */
-/*   Updated: 2023/07/17 12:45:11 by dvaisman         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:49:32 by dvaisman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_init_vars(int argc, char **argv, t_table *table)
 {
+	if (ft_check_args(argc, argv))
+		ft_error_msg("Error: wrong arguments\n", NULL);
 	table->philo_count = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
@@ -67,8 +69,9 @@ void	ft_start_threads(t_table *table)
 	i = 0;
 	while (i < table->philo_count)
 	{
-		pthread_create(&table->philos[i].thread, NULL, ft_philo_act,
-			&table->philos[i]);
+		if (pthread_create(&table->philos[i].thread, NULL, \
+		ft_philo_act, &table->philos[i]) != 0)
+			ft_error_msg("Error: thread creation failed\n", table);
 		i++;
 	}
 	ft_check_death(table->philos);

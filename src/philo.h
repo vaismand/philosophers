@@ -6,7 +6,7 @@
 /*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 12:39:29 by dvaisman          #+#    #+#             */
-/*   Updated: 2023/07/17 12:44:17 by dvaisman         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:46:07 by dvaisman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
 int			ft_strlen(char *s);
 int			ft_print_status(t_philo *philo, int status);
+int			ft_check_args(int argc, char **argv);
+int			ft_check_all_ate(t_philo *philo);
 void		ft_usleep(long long time, t_table *table);
 void		ft_exit_threads(t_table *table);
 void		ft_error_msg(char *msg, t_table *table);

@@ -6,7 +6,7 @@
 /*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 13:45:17 by dvaisman          #+#    #+#             */
-/*   Updated: 2023/07/17 12:42:28 by dvaisman         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:50:14 by dvaisman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void	*ft_philo_act(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->table->time_to_eat, philo->table);
-	while (philo->table->must_eat_count != philo->eat_count \
-	&& !philo->table->stop_cond)
+	while (!philo->table->stop_cond)
 	{
 		ft_philo_eat(philo);
 		philo->state = SLEEP;
@@ -50,24 +49,44 @@ void	*ft_philo_act(void *arg)
 	return (NULL);
 }
 
+int	ft_check_all_ate(t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->table->philo_count)
+	{
+		if (philo[i].eat_count < philo->table->must_eat_count)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	ft_check_death(t_philo *philo)
 {
-	while (1)
+	int	i;
+
+	while (!philo->table->stop_cond)
 	{
-		if (ft_get_time() - philo->last_eat > philo->table->time_to_die)
-		{
-			pthread_mutex_lock(&philo->table->stop);
-			philo->state = DEAD;
-			ft_print_status(philo, DEAD);
-			philo->table->stop_cond = 1;
-			break ;
-		}
-		if (philo->table->must_eat_count != -1 \
-		&& philo->eat_count == philo->table->must_eat_count)
+		i = 0;
+		while (i < philo->table->philo_count)
 		{
 			pthread_mutex_lock(&philo->table->eat);
-			philo->table->stop_cond = 1;
-			break ;
+			if (ft_get_time() - philo[i].last_eat > philo->table->time_to_die)
+			{
+				ft_print_status(&philo[i], DEAD);
+				philo->table->stop_cond = 1;
+				pthread_mutex_unlock(&philo->table->eat);
+				break ;
+			}
+			pthread_mutex_unlock(&philo->table->eat);
+			i++;
+		}
+		if (!philo->table->stop_cond && philo->table->must_eat_count > 0)
+		{
+			if (ft_check_all_ate(philo))
+				philo->table->stop_cond = 1;
 		}
 	}
 }

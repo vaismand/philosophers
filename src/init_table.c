@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_table.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/17 12:39:26 by dvaisman          #+#    #+#             */
+/*   Updated: 2023/07/17 12:45:11 by dvaisman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	ft_init_vars(int argc, char **argv, t_table *table)
@@ -17,7 +29,6 @@ void	ft_init_vars(int argc, char **argv, t_table *table)
 	table->stop_cond = 0;
 	if (pthread_mutex_init(&table->write, NULL) != 0)
 		ft_error_msg("Error: mutex init failed\n", table);
-	
 }
 
 void	ft_init_table(t_table *table)
@@ -37,7 +48,8 @@ void	ft_init_table(t_table *table)
 		else
 			pthread_mutex_init(&table->philos[i + 1].left, NULL);
 		if (i == 0)
-			table->philos[i].right = &table->philos[table->philo_count - 1].left;
+			table->philos[i].right = \
+			&table->philos[table->philo_count - 1].left;
 		else
 			table->philos[i].right = &table->philos[i - 1].left;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 13:45:17 by dvaisman          #+#    #+#             */
-/*   Updated: 2023/07/15 17:30:00 by dvaisman         ###   ########.fr       */
+/*   Updated: 2023/07/17 12:42:28 by dvaisman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ int	ft_philo_eat(t_philo *philo)
 	return (0);
 }
 
-void *ft_philo_act(void *arg)
+void	*ft_philo_act(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->table->time_to_eat, philo->table);
-	while (philo->table->must_eat_count != philo->eat_count && !philo->table->stop_cond)
+	while (philo->table->must_eat_count != philo->eat_count \
+	&& !philo->table->stop_cond)
 	{
 		ft_philo_eat(philo);
 		philo->state = SLEEP;
@@ -61,7 +62,8 @@ void	ft_check_death(t_philo *philo)
 			philo->table->stop_cond = 1;
 			break ;
 		}
-		if (philo->table->must_eat_count != -1 && philo->eat_count == philo->table->must_eat_count)
+		if (philo->table->must_eat_count != -1 \
+		&& philo->eat_count == philo->table->must_eat_count)
 		{
 			pthread_mutex_lock(&philo->table->eat);
 			philo->table->stop_cond = 1;

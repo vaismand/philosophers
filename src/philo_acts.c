@@ -86,7 +86,10 @@ void	ft_check_death(t_philo *philo)
 		if (!philo->table->stop_cond && philo->table->must_eat_count > 0)
 		{
 			if (ft_check_all_ate(philo))
+			{
 				philo->table->stop_cond = 1;
+				ft_error_msg("All philosophers ate enough\n", philo->table);
+			}
 		}
 	}
 }

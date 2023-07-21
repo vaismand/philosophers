@@ -51,5 +51,5 @@ void	ft_usleep(long long time, t_table *table)
 
 	start = ft_get_time();
 	while (ft_get_time() - start < time)
-		usleep(table->philo_count * 50);
+		usleep(table->philo_count * 100);
 }

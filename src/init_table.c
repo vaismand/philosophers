@@ -15,7 +15,10 @@
 void	ft_init_vars(int argc, char **argv, t_table *table)
 {
 	if (ft_check_args(argc, argv))
+	{
+		free(table);
 		ft_error_msg("Error: wrong arguments\n", NULL);
+	}
 	table->philo_count = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);

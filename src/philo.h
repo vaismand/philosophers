@@ -24,6 +24,7 @@
 # define SLEEP 2
 # define THINK 3
 # define DEAD 4
+# define ALL_ATE 5
 
 typedef struct s_philo
 {
@@ -45,6 +46,7 @@ typedef struct s_table
 	int				time_to_sleep;
 	int				must_eat_count;
 	int				stop_cond;
+	int				all_ate_count;
 	t_philo			*philos;
 	long long		start_time;
 	pthread_mutex_t	write;

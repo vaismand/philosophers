@@ -23,6 +23,7 @@ void	ft_init_vars(int argc, char **argv, t_table *table)
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
+	table->all_ate_count = 0;
 	if (argc == 6)
 		table->must_eat_count = ft_atoi(argv[5]);
 	else
@@ -40,8 +41,8 @@ void	ft_init_table(t_table *table)
 {
 	int	i;
 
-	i = 0;
-	while (i < table->philo_count)
+	i = -1;
+	while (++i < table->philo_count)
 	{
 		table->philos[i].id = i + 1;
 		table->philos[i].eat_count = 0;
@@ -57,7 +58,7 @@ void	ft_init_table(t_table *table)
 			&table->philos[table->philo_count - 1].left;
 		else
 			table->philos[i].right = &table->philos[i - 1].left;
-		i++;
+
 	}
 	if (pthread_mutex_init(&table->stop, NULL) != 0)
 		ft_error_msg("Error: mutex init failed\n", table);
@@ -78,7 +79,6 @@ void	ft_start_threads(t_table *table)
 		i++;
 	}
 	ft_check_death(table->philos);
-	ft_exit_threads(table);
 }
 
 void	ft_exit_threads(t_table *table)
@@ -88,7 +88,7 @@ void	ft_exit_threads(t_table *table)
 	i = 0;
 	while (i < table->philo_count)
 	{
-		pthread_detach(table->philos[i].thread);
+		pthread_join(table->philos[i].thread, NULL);
 		i++;
 	}
 	i = 0;

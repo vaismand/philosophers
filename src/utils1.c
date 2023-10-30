@@ -6,7 +6,7 @@
 /*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 12:39:13 by dvaisman          #+#    #+#             */
-/*   Updated: 2023/07/17 12:39:15 by dvaisman         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:59:46 by dvaisman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,33 @@ void	ft_usleep(long long time, t_table *table)
 	start = ft_get_time();
 	while (ft_get_time() - start < time)
 		usleep(table->philo_count * 100);
+}
+
+int	ft_print_status(t_philo *philo, int status)
+{
+	pthread_mutex_lock(&philo->table->write);
+	if (ft_stop_simulation_flag(philo->table) == 1)
+	{
+		pthread_mutex_unlock(&philo->table->write);
+		return (1);
+	}
+	if (status == DEAD)
+		printf("%lld %d died\n",
+			ft_get_time() - philo->table->start_time, philo->id);
+	else if (status == ALL_ATE)
+		printf("All philosophers ate %d times\n", philo->table->must_eat_count);
+	else if (status == FORK)
+		printf("%lld %d has taken a fork\n",
+			ft_get_time() - philo->table->start_time, philo->id);
+	else if (status == EAT)
+		printf("%lld %d is eating\n",
+			ft_get_time() - philo->table->start_time, philo->id);
+	else if (status == SLEEP)
+		printf("%lld %d is sleeping\n",
+			ft_get_time() - philo->table->start_time, philo->id);
+	else if (status == THINK)
+		printf("%lld %d is thinking\n",
+			ft_get_time() - philo->table->start_time, philo->id);
+	pthread_mutex_unlock(&philo->table->write);
+	return (0);
 }

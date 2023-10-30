@@ -6,6 +6,7 @@ SRCS = src/main.c \
 		src/init_table.c \
 		src/utils1.c \
 		src/utils2.c \
+		src/stop_cond.c \
 		src/philo_acts.c \
 
 OBJS := $(SRCS:.c=.o)

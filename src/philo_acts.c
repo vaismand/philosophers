@@ -6,7 +6,7 @@
 /*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 13:45:17 by dvaisman          #+#    #+#             */
-/*   Updated: 2023/10/23 13:03:43 by dvaisman         ###   ########.fr       */
+/*   Updated: 2023/10/31 20:35:43 by dvaisman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	*ft_philo_act(void *arg)
 		continue ;
 	if (philo->table->philo_count == 1)
 		return (ft_one_philo_act(philo));
-	if (philo->id % 2 == 0)
+	if (philo->id % 2)
 		ft_philo_think(philo, 1);
 	while (ft_stop_simulation_flag(philo->table) == 0)
 	{

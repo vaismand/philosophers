@@ -6,7 +6,7 @@
 /*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 12:39:26 by dvaisman          #+#    #+#             */
-/*   Updated: 2023/10/23 13:09:30 by dvaisman         ###   ########.fr       */
+/*   Updated: 2023/10/31 20:30:31 by dvaisman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,16 @@ void	ft_init_table(t_table *table)
 {
 	int	i;
 
-	i = -1;
-	while (++i < table->philo_count)
+	i = 0;
+	while (i < table->philo_count)
 	{
-		table->philos[i].id = i + 1;
+		table->philos[i].id = i;
 		table->philos[i].eat_count = 0;
 		table->philos[i].state = THINK;
 		table->philos[i].last_eat = ft_get_time();
 		table->philos[i].table = table;
 		ft_get_forks(&table->philos[i]);
+		i++;
 	}
 	if (pthread_mutex_init(&table->stop, NULL) != 0)
 		ft_error_msg("Error: mutex init failed\n", table);

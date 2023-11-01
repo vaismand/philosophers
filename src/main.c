@@ -56,6 +56,7 @@ void	ft_exit_threads(t_table *table)
 	pthread_mutex_destroy(&table->write);
 	pthread_mutex_destroy(&table->stop);
 	pthread_mutex_destroy(&table->eat);
+	free(table->forks_mutex);
 	free(table->philos);
 	free(table);
 }

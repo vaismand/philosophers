@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   stop_cond.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dvaisman <dvaisman@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:04:19 by dvaisman          #+#    #+#             */
-/*   Updated: 2023/10/23 13:09:16 by dvaisman         ###   ########.fr       */
+/*   Updated: 2024/03/26 20:08:28 by dvaisman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../inc/philo.h"
 
 static void	ft_set_stop_flag(t_table *table, int state)
 {

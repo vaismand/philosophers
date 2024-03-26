@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_table.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dvaisman <dvaisman@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 12:39:26 by dvaisman          #+#    #+#             */
-/*   Updated: 2023/10/31 20:30:31 by dvaisman         ###   ########.fr       */
+/*   Updated: 2024/03/26 20:08:31 by dvaisman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../inc/philo.h"
 
 static pthread_mutex_t	*ft_init_forks(t_table *table)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philo_acts.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvaisman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dvaisman <dvaisman@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 13:45:17 by dvaisman          #+#    #+#             */
-/*   Updated: 2023/10/31 20:35:43 by dvaisman         ###   ########.fr       */
+/*   Updated: 2024/03/26 20:08:30 by dvaisman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../inc/philo.h"
 
 static void	ft_philo_eat(t_philo *philo)
 {
